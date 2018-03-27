@@ -24,6 +24,7 @@ export default class ItemListPage extends Component<{}> {
       evaluations: [],
       isLoading: true,
       isOpen: false,
+      isAuthenticate: false
     }
   }
 
