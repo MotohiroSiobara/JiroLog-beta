@@ -32,12 +32,11 @@ export default class App extends Component {
   }
 
   loginUser(email, password) {
-    // this.setState({ isLogin: true })
-    // firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-    //   var errorCode = error.code;
-    //   var errorMessage = error.message;
-    //   console.warn(errorMessage);
-    // });
+    this.setState({ isLogin: true })
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    });
   }
 
   registerUser(email, password) {
