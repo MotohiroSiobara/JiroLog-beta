@@ -4,6 +4,7 @@ import {
   View,
   Text,
   TouchableHighlight,
+  ImageBackground,
 } from 'react-native';
 
 import ItemListPage from '../screens/ItemListPage';
@@ -17,46 +18,44 @@ export default class AuthenticatePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pageType: pageType.register
+      pageType: null
     };
   }
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <ImageBackground
+        source={require('../images/jiro-1888644_640.jpg')}
+        style={styles.backgroundImage}>
         {this.state.pageType == pageType.register ? (
           <View>
             <RegisterForm registerUser={(email, password) => this.props.registerUser(email, password)} />
-            <View style={styles.container}>
-              {this.renderLink(pageType.login)}
-            </View>
+            {this.renderLink(pageType.login)}
           </View>
         ) : (
           <View>
             <LoginForm loginUser={(email, password) => this.props.loginUser(email, password)} />
-            <View style={styles.container}>
-              {this.renderLink(pageType.register)}
-            </View>
+            {this.renderLink(pageType.register)}
           </View>
         )}
-      </View>
-    );
-  }
-
-  renderLink(pageTypeVal) {
-    return(
-      <View>
-        <Text
-          style={{color: 'blue'}}
-          onPress={() => this.setState({ pageType: pageTypeVal })}>
-          {pageTypeVal == pageType.register ? '新規登録' : 'ログインする'}
-        </Text>
         <Text
           style={{color: 'blue'}}
           onPress={() => this.props.loginUser('example.2@docomo.ne.jp', 'password')}>
           テストログイン
         </Text>
-      </View>
+      </ImageBackground>
+    );
+  }
+
+  renderLink(pageTypeVal) {
+    return(
+        <TouchableHighlight style={styles.button} onPress={() => this.setState({ pageType: pageTypeVal })} underlayColor='#99d9f4'>
+          <Text
+            style={styles.buttonText}
+          >
+            {pageTypeVal == pageType.register ? '新規登録する' : 'ログインする'}
+          </Text>
+        </TouchableHighlight>
     )
   }
 }
@@ -68,7 +67,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   button: {
-    height: 36,
+    height: 18,
+    width: 100,
     backgroundColor: '#48BBEC',
     borderColor: '#48BBEC',
     borderWidth: 1,
@@ -76,5 +76,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignSelf: 'stretch',
     justifyContent: 'center'
-  }
+  },
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover'
+  },
+  buttonText: {
+    fontSize: 12,
+    color: 'white',
+    alignSelf: 'center'
+  },
 });

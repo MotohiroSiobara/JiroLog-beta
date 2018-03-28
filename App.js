@@ -4,6 +4,8 @@ import {
   View,
   Text,
   TouchableHighlight,
+  Image,
+  ImageBackground
 } from 'react-native';
 import { Root } from './config/router';
 import RegisterForm from './components/RegisterForm';
@@ -71,5 +73,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignSelf: 'stretch',
     justifyContent: 'center'
-  }
+  },
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover'
+  },
 });

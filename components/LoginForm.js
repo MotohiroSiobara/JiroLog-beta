@@ -42,7 +42,7 @@ export default class LoginForm extends Component {
             options={options}
           />
           <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#99d9f4'>
-            <Text style={styles.buttonText}>Save</Text>
+            <Text style={styles.buttonText}>ログイン</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 50,
     padding: 20,
-    backgroundColor: '#ffffff',
+    backgroundColor:'transparent',
   },
   title: {
     fontSize: 30,
