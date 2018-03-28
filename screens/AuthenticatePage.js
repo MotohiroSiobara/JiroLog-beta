@@ -45,22 +45,19 @@ export default class AuthenticatePage extends Component {
 
   renderLink(pageTypeVal) {
     return(
-      <Text
-        style={{color: 'blue'}}
-        onPress={() => this.setState({ pageType: pageTypeVal })}>
-        {pageTypeVal == pageType.register ? '新規登録' : 'ログインする'}
-      </Text>
+      <View>
+        <Text
+          style={{color: 'blue'}}
+          onPress={() => this.setState({ pageType: pageTypeVal })}>
+          {pageTypeVal == pageType.register ? '新規登録' : 'ログインする'}
+        </Text>
+        <Text
+          style={{color: 'blue'}}
+          onPress={() => this.props.loginUser('example.2@docomo.ne.jp', 'password')}>
+          テストログイン
+        </Text>
+      </View>
     )
-  }
-
-  registerUser(email, password) {
-    this.setState({ isLogin: true })
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.warn(errorMessage);
-    });
   }
 }
 

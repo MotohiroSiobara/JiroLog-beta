@@ -15,9 +15,6 @@ import {
 import { Rating } from 'react-native-elements';
 
 const db = firebase.database();
-console.warn(firebase.auth());
-const ref = db.ref('/evaluations');
-//const ref = db.ref(firebase.auth().currentUser.uid + '/evaluations');
 
 export default class ItemListPage extends Component<{}> {
   constructor(props) {
@@ -32,7 +29,7 @@ export default class ItemListPage extends Component<{}> {
 
   componentWillMount() {
     // データベースに追加された時のeventハンドリング
-    ref.on('child_added', snapshot => {
+    db.ref(firebase.auth().currentUser.uid + '/evaluations').on('child_added', snapshot => {
       this.setState({
         evaluations: [
           ...this.state.evaluations,
@@ -44,7 +41,7 @@ export default class ItemListPage extends Component<{}> {
     this.setState({ isLoading: false });
 
     // データベースから削除された時のeventハンドリング
-    ref.on('child_removed', snapshot => {
+    db.ref(firebase.auth().currentUser.uid + '/evaluations').on('child_removed', snapshot => {
       this.setState({
         evaluations: this.state.evaluations.filter((ev, index) => {
           return ev.key != snapshot.key
@@ -54,7 +51,6 @@ export default class ItemListPage extends Component<{}> {
   }
 
   render() {
-    console.warn(this.state.evaluations);
     const sortedItems = downSort(this.state.evaluations);
 
     return (
@@ -81,11 +77,11 @@ export default class ItemListPage extends Component<{}> {
 
   deleteEvaluation(index) {
     const key = this.state.evaluations[index].key
-    ref.child(key).set(null)
+    this.evaluationDBRef().child(key).set(null)
   }
 
   saveEvaluation(evaluation) {
-    ref.push({
+    this.evaluationDBRef().push({
       shopName:    evaluation.shopName,
       pigPoint:    evaluation.pigPoint,
       noodlePoint: evaluation.noodlePoint,
@@ -100,6 +96,9 @@ export default class ItemListPage extends Component<{}> {
     })
   }
 
+  evaluationDBRef() {
+    return db.ref(firebase.auth().currentUser.uid + '/evaluations');
+  }
 
   toggleModal() {
     this.setState({

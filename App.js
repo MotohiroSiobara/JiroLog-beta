@@ -14,38 +14,45 @@ import AuthenticatePage from './screens/AuthenticatePage';
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { isLogin: false };
+    this.state = { loginCount: 0 };
   }
 
   render() {
     return (
       <View style={{flex: 1}}>
-        {this.state.isLogin ? (
-          <Root />
-        ) : (
-          <AuthenticatePage
-            registerUser={(email, password) => this.registerUser(email, password)}
-            loginUser={(email, password) => this.loginUser(email, password)} />
-        )}
+        {this.componentByAuth()}
       </View>
     );
   }
 
-  loginUser(email, password) {
-    this.setState({ isLogin: true })
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-    });
+  componentByAuth() {
+    if (firebase.auth().currentUser) {
+      return <Root />
+    } else {
+      return(
+        <AuthenticatePage
+          registerUser={(email, password) => this.registerUser(email, password)}
+          loginUser={(email, password) => this.loginUser(email, password)} />
+      )
+    }
   }
 
-  registerUser(email, password) {
-    this.setState({ isLogin: true })
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+  async loginUser(email, password) {
+    await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorMessage);
+    });
+    await this.setState({ loginCount: this.state.loginCount + 1 });
+  }
+
+  async registerUser(email, password) {
+    await firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.warn(errorMessage);
     });
+    this.loginUser(email, password);
   }
 }
 
