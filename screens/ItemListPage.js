@@ -15,7 +15,9 @@ import {
 import { Rating } from 'react-native-elements';
 
 const db = firebase.database();
-const ref = db.ref('evaluations');
+console.warn(firebase.auth());
+const ref = db.ref('/evaluations');
+//const ref = db.ref(firebase.auth().currentUser.uid + '/evaluations');
 
 export default class ItemListPage extends Component<{}> {
   constructor(props) {
@@ -52,6 +54,7 @@ export default class ItemListPage extends Component<{}> {
   }
 
   render() {
+    console.warn(this.state.evaluations);
     const sortedItems = downSort(this.state.evaluations);
 
     return (

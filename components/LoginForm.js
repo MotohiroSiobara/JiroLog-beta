@@ -28,12 +28,12 @@ const options = {
   }
 };
 
-export default class RegisterForm extends Component {
+export default class LoginForm extends Component {
   render() {
     return(
       <View>
         <Header
-          centerComponent={{ text: '新規登録', style: { color: '#fff' } }}
+          centerComponent={{ text: 'ログイン', style: { color: '#fff' } }}
         />
         <View style={styles.container}>
           <Form
@@ -54,7 +54,7 @@ export default class RegisterForm extends Component {
     if (value) {
       const password = value.password;
       const email = value.email;
-      this.props.registerUser(email, password);
+      this.props.loginUser(email, password);
     }
   }
 }
