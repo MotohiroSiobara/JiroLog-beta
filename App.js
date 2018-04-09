@@ -14,9 +14,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = { beLoggedIn: false };
-    firebase.auth().signOut();
     firebase.auth().onAuthStateChanged((user) => {
-      console.warn(user);
       if (user) {
         this.setState({ beLoggedIn: true });
       } else {

@@ -6,17 +6,12 @@ import {
 } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
-import LogoutButton from '../components/LogoutButton';
-import UserPage from '../screens/UserPage';
-import AuthenticatePage from '../screens/AuthenticatePage';
-import RoutePage from '../screens/RoutePage';
-
 import SignUp from '../screens/SignUp';
 import SignIn from '../screens/SignIn';
 
 import ItemListPage from '../screens/ItemListPage';
 import DetailItemPage from '../screens/DetailItemPage';
-
+import UserPage from '../screens/UserPage';
 
 export const ItemStack = StackNavigator({
   ItemList: {
@@ -38,6 +33,13 @@ export const LoggedIn = TabNavigator({
       tabBarIcon: ({ tintColor }) => <Icon name="list" size={35} color={tintColor} />,
     },
   },
+  UserTab: {
+    screen: UserPage,
+    navigationOptions: {
+      tabBarLabel: 'Myページ',
+      tabBarIcon: ({ tintColor }) => <Icon name="list" size={35} color={tintColor} />,
+    },
+  }
 });
 
 export const NotLoggedIn = StackNavigator({

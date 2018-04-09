@@ -18,14 +18,15 @@ export default class ItemListPage extends Component<{}> {
   render() {
     return (
       <View style={{flex:1}}>
-        <Button title='ログアウト' onPress={() => this.logout()} />
+        <Button title='ログアウト' onPress={() => this.logout()} style={{ marginTop: 50 }} />
       </View>
     );
   }
 
   logout() {
+    console.warn("click");
     firebase.auth().signOut().then(function() {
-      this.props.navigation.navigate('ListTab');
+      console.warn('aa');
     }).catch(function(error) {
       // An error happened.
     });
