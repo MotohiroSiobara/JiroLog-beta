@@ -10,10 +10,9 @@ import {
 import ItemListPage from '../screens/ItemListPage';
 import RegisterForm from '../components/RegisterForm';
 import LoginForm from '../components/LoginForm';
-console.ignoredYellowBox = ['Remote debugger'];
 import firebase from '../config/firebase';
 
-const pageType = { register: 'Register', login: 'Login' }
+const pageType = { register: 'Register', login: 'Login' };
 export default class AuthenticatePage extends Component {
   constructor(props) {
     super(props);

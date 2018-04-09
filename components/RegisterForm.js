@@ -32,9 +32,6 @@ export default class RegisterForm extends Component {
   render() {
     return(
       <View>
-        <Header
-          centerComponent={{ text: '新規登録', style: { color: '#fff' } }}
-        />
         <View style={styles.container}>
           <Form
             ref="form"

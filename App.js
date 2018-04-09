@@ -7,54 +7,31 @@ import {
   Image,
   ImageBackground
 } from 'react-native';
-import { Root } from './config/router';
-import RegisterForm from './components/RegisterForm';
-console.ignoredYellowBox = ['Remote debugger'];
+import { createRootNavigator } from './config/router';
 import firebase from './config/firebase';
-import AuthenticatePage from './screens/AuthenticatePage';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { loginCount: 0 };
+    this.state = { beLoggedIn: false };
+    firebase.auth().signOut();
+    firebase.auth().onAuthStateChanged((user) => {
+      console.warn(user);
+      if (user) {
+        this.setState({ beLoggedIn: true });
+      } else {
+        this.setState({ beLoggedIn: false });
+      }
+    });
   }
 
   render() {
+    const Root = createRootNavigator(this.state.beLoggedIn);
     return (
       <View style={{flex: 1}}>
-        {this.componentByAuth()}
+        <Root />
       </View>
     );
-  }
-
-  componentByAuth() {
-    if (firebase.auth().currentUser) {
-      return <Root />
-    } else {
-      return(
-        <AuthenticatePage
-          registerUser={(email, password) => this.registerUser(email, password)}
-          loginUser={(email, password) => this.loginUser(email, password)} />
-      )
-    }
-  }
-
-  async loginUser(email, password) {
-    await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorMessage);
-    });
-    await this.setState({ loginCount: this.state.loginCount + 1 });
-  }
-
-  async registerUser(email, password) {
-    await firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.warn(errorMessage);
-    });
-    this.loginUser(email, password);
   }
 }
 

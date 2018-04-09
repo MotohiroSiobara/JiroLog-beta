@@ -1,28 +1,38 @@
 import React from 'react';
-import { TabNavigator, StackNavigator } from 'react-navigation';
+import {
+  TabNavigator,
+  StackNavigator,
+  SwitchNavigator
+} from 'react-navigation';
 import { Icon } from 'react-native-elements';
+
+import LogoutButton from '../components/LogoutButton';
+import UserPage from '../screens/UserPage';
+import AuthenticatePage from '../screens/AuthenticatePage';
+import RoutePage from '../screens/RoutePage';
+
+import SignUp from '../screens/SignUp';
+import SignIn from '../screens/SignIn';
 
 import ItemListPage from '../screens/ItemListPage';
 import DetailItemPage from '../screens/DetailItemPage';
 
-export const ItemRoute = StackNavigator({
+
+export const ItemStack = StackNavigator({
   ItemList: {
     screen: ItemListPage,
-    navigationOptions: {
-      title: '評価一覧',
-    },
   },
   DetailItem: {
     screen: DetailItemPage,
     navigationOptions: {
       title: '詳細ページ',
     },
-  },
+  }
 });
 
-export const Tabs = TabNavigator({
+export const LoggedIn = TabNavigator({
   ListTab: {
-    screen: ItemRoute,
+    screen: ItemStack,
     navigationOptions: {
       tabBarLabel: '一覧',
       tabBarIcon: ({ tintColor }) => <Icon name="list" size={35} color={tintColor} />,
@@ -30,13 +40,27 @@ export const Tabs = TabNavigator({
   },
 });
 
-export const Root = StackNavigator({
-  Tabs: {
-    screen: Tabs,
+export const NotLoggedIn = StackNavigator({
+  SignUp: {
+    screen: SignUp,
   },
-  ItemList: {
-    screen: ItemRoute,
-  },
-}, {
-  headerMode: 'none',
+  SignIn: {
+    screen: SignIn
+  }
 });
+
+export const createRootNavigator = (beLoggedIn = false) => {
+  return SwitchNavigator(
+    {
+      NotLoggedIn: {
+        screen: NotLoggedIn
+      },
+      LoggedIn: {
+        screen: LoggedIn
+      }
+    },
+    {
+      initialRouteName: beLoggedIn ? "LoggedIn" : "NotLoggedIn"
+    }
+  );
+};

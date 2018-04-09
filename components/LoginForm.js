@@ -32,9 +32,6 @@ export default class LoginForm extends Component {
   render() {
     return(
       <View>
-        <Header
-          centerComponent={{ text: 'ログイン', style: { color: '#fff' } }}
-        />
         <View style={styles.container}>
           <Form
             ref="form"
