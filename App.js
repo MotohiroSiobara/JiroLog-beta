@@ -10,7 +10,7 @@ import {
 import { createRootNavigator } from './config/router';
 import firebase from './config/firebase';
 
-export default class App extends Component {
+export default class App extends Component<{}> {
   constructor(props) {
     super(props);
     this.state = { beLoggedIn: false };
@@ -26,9 +26,7 @@ export default class App extends Component {
   render() {
     const Root = createRootNavigator(this.state.beLoggedIn);
     return (
-      <View style={{flex: 1}}>
-        <Root />
-      </View>
+      <Root />
     );
   }
 }

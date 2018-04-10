@@ -4,11 +4,11 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  Button,
   TextInput,
   Text,
   TouchableHighlight,
 } from 'react-native';
+import { Button, FormLabel, FormInput } from "react-native-elements";
 
 import { Header } from 'react-native-elements';
 import t from 'tcomb-form-native';
@@ -32,16 +32,20 @@ export default class LoginForm extends Component {
   render() {
     return(
       <View>
-        <View style={styles.container}>
-          <Form
-            ref="form"
-            type={LoginUser}
-            options={options}
-          />
-          <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#99d9f4'>
-            <Text style={styles.buttonText}>ログイン</Text>
-          </TouchableHighlight>
-        </View>
+        <FormLabel>Email</FormLabel>
+        <FormInput placeholder="Email address..." />
+        <FormLabel>Password</FormLabel>
+        <FormInput secureTextEntry placeholder="Password..." />
+        <FormLabel>Confirm Password</FormLabel>
+        <FormInput secureTextEntry placeholder="Confirm Password..." />
+        <Button
+          buttonStyle={{ marginTop: 20 }}
+          backgroundColor="#03A9F4"
+          title="SIGN IN"
+          onPress={() => {
+            this.onPress();
+          }}
+        />
       </View>
     )
   }

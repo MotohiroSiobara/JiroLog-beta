@@ -16,6 +16,9 @@ import UserPage from '../screens/UserPage';
 export const ItemStack = StackNavigator({
   ItemList: {
     screen: ItemListPage,
+    navigationOptions: {
+      title: '一覧ページ',
+    },
   },
   DetailItem: {
     screen: DetailItemPage,
@@ -45,9 +48,15 @@ export const LoggedIn = TabNavigator({
 export const NotLoggedIn = StackNavigator({
   SignUp: {
     screen: SignUp,
+    navigationOptions: {
+      title: '新規登録',
+    },
   },
   SignIn: {
-    screen: SignIn
+    screen: SignIn,
+    navigationOptions: {
+      title: 'ログイン',
+    },
   }
 });
 
