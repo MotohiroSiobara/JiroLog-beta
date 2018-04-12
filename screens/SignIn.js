@@ -7,25 +7,31 @@ import {
   ImageBackground,
 } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from "react-native-elements";
-
-//import LoginForm from '../components/LoginForm';
 import firebase from '../config/firebase';
 
 export default class SignIn extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: ''
+    };
+  }
+
   render() {
     return (
       <View style={{ paddingVertical: 20 }}>
         <Card>
           <FormLabel>Email</FormLabel>
-          <FormInput placeholder="Email address..." />
+          <FormInput placeholder="Email address..." onChangeText={(text) => this.setState({ email: text })} />
           <FormLabel>Password</FormLabel>
-          <FormInput secureTextEntry placeholder="Password..." />
+          <FormInput secureTextEntry placeholder="Password..." onChangeText={(text) => this.setState({ password: text })} />
 
           <Button
             buttonStyle={{ marginTop: 20 }}
             backgroundColor="#03A9F4"
             title="SIGN IN"
-            onPress={(e) => this.loginUser(email, password) }
+            onPress={(e) => this.loginUser() }
           />
 
           <Button
@@ -50,7 +56,8 @@ export default class SignIn extends Component {
     );
   }
 
-  async loginUser(email, password) {
+  async loginUser() {
+    const { email, password } = this.state;
     await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;

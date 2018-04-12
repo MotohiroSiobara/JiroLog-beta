@@ -28,6 +28,15 @@ export const ItemStack = StackNavigator({
   }
 });
 
+export const UserStack = StackNavigator({
+  Profile: {
+    screen: UserPage,
+    navigationOptions: {
+      title: 'Myページ',
+    },
+  },
+});
+
 export const LoggedIn = TabNavigator({
   ListTab: {
     screen: ItemStack,
@@ -37,7 +46,7 @@ export const LoggedIn = TabNavigator({
     },
   },
   UserTab: {
-    screen: UserPage,
+    screen: UserStack,
     navigationOptions: {
       tabBarLabel: 'Myページ',
       tabBarIcon: ({ tintColor }) => <Icon name="list" size={35} color={tintColor} />,
