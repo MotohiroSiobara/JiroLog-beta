@@ -14,7 +14,7 @@ import {
 import { Rating } from 'react-native-elements';
 
 export default class ItemList extends Component<{}> {
-  _keyExtractor = (item, index) => index;
+  _keyExtractor = (item, index) => index.toString();
 
   _renderItem = ({item, index}) => (
     <ListItem
@@ -48,7 +48,7 @@ class ListItem extends React.PureComponent {
 
   render() {
     const item = this.props.item;
-    const image = item.image ? item.image : "file:///var/mobile/Containers/Data/Application/9429384A-D46F-4A38-859D-7B98ACC71D9A/Library/Caches/ExponentExperienceData/%2540anonymous%252Fjirolog-ad8dd64a-dcde-4c1a-bbac-21426834bb45/ImagePicker/6DA81E26-0B64-425D-92AF-A77863522079.jpg"
+    const image = item.image ? item.image : "http://2.bp.blogspot.com/-09XFbYdTmLs/VwIgXThmQWI/AAAAAAAA5bg/3TdIOG1frrEsHFWOGi5GTqD4X5k8qrxJQ/s800/ramen_moyashi.png"
 
     return (
       <Swipeout right={[{text: 'delete', onPress: () => this.props.deleteItem(this.props.index), backgroundColor: 'red'}]} backgroundColor='white' autoClose={true}>
