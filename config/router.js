@@ -12,12 +12,14 @@ import SignIn from '../screens/SignIn';
 import ItemListPage from '../screens/ItemListPage';
 import DetailItemPage from '../screens/DetailItemPage';
 import UserPage from '../screens/UserPage';
+import AddButton from '../components/AddButton';
 
 export const ItemStack = StackNavigator({
   ItemList: {
     screen: ItemListPage,
     navigationOptions: {
       title: '一覧ページ',
+      headerRight: AddButton,
     },
   },
   DetailItem: {
@@ -49,7 +51,7 @@ export const LoggedIn = TabNavigator({
     screen: UserStack,
     navigationOptions: {
       tabBarLabel: 'Myページ',
-      tabBarIcon: ({ tintColor }) => <Icon name="list" size={35} color={tintColor} />,
+      tabBarIcon: ({ tintColor }) => <Icon name="fas fa-user" size={35} color={tintColor} />,
     },
   }
 });
