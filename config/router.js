@@ -1,31 +1,40 @@
 import React from 'react';
+import { Icon } from 'react-native-elements';
 import {
   TabNavigator,
   StackNavigator,
   SwitchNavigator
 } from 'react-navigation';
-import { Icon } from 'react-native-elements';
 
 import SignUp from '../screens/SignUp';
 import SignIn from '../screens/SignIn';
 
 import ItemListPage from '../screens/ItemListPage';
 import DetailItemPage from '../screens/DetailItemPage';
+import NewItemPage from '../screens/NewItemPage';
 import UserPage from '../screens/UserPage';
 import AddButton from '../components/AddButton';
 
 export const ItemStack = StackNavigator({
   ItemList: {
     screen: ItemListPage,
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
       title: '一覧ページ',
-      headerRight: AddButton,
-    },
+      headerRight: (
+        <Icon name="add" size={35} onPress={() => navigation.navigate('NewItem')} />
+      )
+    }),
   },
   DetailItem: {
     screen: DetailItemPage,
     navigationOptions: {
       title: '詳細ページ',
+    },
+  },
+  NewItem: {
+    screen: NewItemPage,
+    navigationOptions: {
+      title: '新規登録',
     },
   }
 });

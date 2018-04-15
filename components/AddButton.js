@@ -4,7 +4,7 @@ import { Icon } from 'react-native-elements';
 export default class AddButton extends Component<{}> {
   render() {
     return(
-      <Icon name="plus" size={35} color="blue"/>
+      <Icon name="add" size={35} color="blue"/>
     )
   }
 }
