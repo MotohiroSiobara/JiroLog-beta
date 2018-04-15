@@ -51,7 +51,7 @@ export const LoggedIn = TabNavigator({
     screen: UserStack,
     navigationOptions: {
       tabBarLabel: 'Myページ',
-      tabBarIcon: ({ tintColor }) => <Icon name="fas fa-user" size={35} color={tintColor} />,
+      tabBarIcon: ({ tintColor }) => <Icon name="face" size={35} color={tintColor} />,
     },
   }
 });
@@ -78,7 +78,10 @@ export const createRootNavigator = (beLoggedIn = false) => {
         screen: NotLoggedIn
       },
       LoggedIn: {
-        screen: LoggedIn
+        screen: LoggedIn,
+        navigationOptions: {
+          title: '一覧ページ',
+        },
       }
     },
     {
