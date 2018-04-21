@@ -15,7 +15,6 @@ export default class App extends Component<{}> {
     super(props);
     this.state = { beLoggedIn: false };
     firebase.auth().onAuthStateChanged((user) => {
-      console.warn("aaaa");
       if (user) {
         this.setState({ beLoggedIn: true });
       } else {
