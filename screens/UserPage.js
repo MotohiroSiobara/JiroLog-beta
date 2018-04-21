@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 
-export default class ItemListPage extends Component<{}> {
+export default class UserPage extends Component<{}> {
   constructor(props) {
     super(props);
     this.state = { count: 0 } // 再レンダリングを促したい場合のためのstate
@@ -32,6 +32,12 @@ export default class ItemListPage extends Component<{}> {
           >
             <Text style={{ color: "white", fontSize: 28 }}>JD</Text>
           </View>
+          <Button
+            style={{ marginBottom: 10}}
+            backgroundColor="#03A9F4"
+            title="プロフィールを編集する"
+            onPress={() => this.props.navigation.navigate('EditProfile')}
+          />
           <Button
             backgroundColor="#03A9F4"
             title="SIGN OUT"

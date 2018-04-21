@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import firebase from '../config/firebase';
 import { formatDate } from '../functions/formatDate';
 import ItemList from '../components/ItemList';
-import ModalEvaluation from '../components/ModalEvaluation';
 
 import {
   Text,
@@ -22,14 +21,15 @@ export default class ItemListPage extends Component<{}> {
     this.state = {
       evaluations: [],
       isLoading: true,
-      isOpen: false,
       isAuthenticate: false
     }
   }
 
   componentWillMount() {
+    // console.warn("componentWillMount");
     // データベースに追加された時のeventハンドリング
     db.ref(firebase.auth().currentUser.uid + '/evaluations').on('child_added', snapshot => {
+      console.warn("componentWillMount");
       this.setState({
         evaluations: [
           ...this.state.evaluations,
@@ -55,15 +55,7 @@ export default class ItemListPage extends Component<{}> {
 
     return (
       <View style={{flex:1}}>
-        <View style={{flex: 0.1}}>
-          <Button title={this.state.isOpen ? '閉じる' : '新規登録'} onPress={() => this.toggleModal()} />
-        </View>
         <View style={{flex: 2}}>
-          <ModalEvaluation
-            isOpen={this.state.isOpen}
-            closeModal={() => this.closeModal()}
-            save={(evaluation) => this.saveEvaluation(evaluation)}
-          />
           {this.renderIndicator()}
           <ItemList
             items={sortedItems}
@@ -80,22 +72,6 @@ export default class ItemListPage extends Component<{}> {
     this.evaluationDBRef().child(key).set(null)
   }
 
-  saveEvaluation(evaluation) {
-    this.evaluationDBRef().push({
-      shopName:    evaluation.shopName,
-      pigPoint:    evaluation.pigPoint,
-      noodlePoint: evaluation.noodlePoint,
-      soupPoint:   evaluation.soupPoint,
-      totalPoint:  evaluation.totalPoint,
-      date:        formatDate(evaluation.date, 'yyyy/MM/dd'),
-      image:       evaluation.image
-    });
-
-    this.setState({
-      isOpen: false,
-    })
-  }
-
   evaluationDBRef() {
     return db.ref(firebase.auth().currentUser.uid + '/evaluations');
   }
@@ -104,14 +80,6 @@ export default class ItemListPage extends Component<{}> {
     this.setState({
       isOpen: !this.state.isOpen
     })
-  }
-
-  closeModal() {
-    if (!this.state.isOpen) {
-      this.setState({
-        isOpen: false
-      })
-    }
   }
 
   moveToDetailPage(evaluation) {

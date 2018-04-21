@@ -13,7 +13,7 @@ import ItemListPage from '../screens/ItemListPage';
 import DetailItemPage from '../screens/DetailItemPage';
 import NewItemPage from '../screens/NewItemPage';
 import UserPage from '../screens/UserPage';
-import AddButton from '../components/AddButton';
+import EditUserPage from '../screens/EditUserPage';
 
 export const ItemStack = StackNavigator({
   ItemList: {
@@ -44,6 +44,12 @@ export const UserStack = StackNavigator({
     screen: UserPage,
     navigationOptions: {
       title: 'Myページ',
+    },
+  },
+  EditProfile: {
+    screen: EditUserPage,
+    navigationOptions: {
+      title: 'プロフィール編集',
     },
   },
 });
