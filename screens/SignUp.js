@@ -38,7 +38,7 @@ export default class SignUp extends Component<{}> {
             <Button
               buttonStyle={{ marginTop: 20 }}
               backgroundColor="#03A9F4"
-              title="SIGN UP"
+              title="サインアップ"
               onPress={() => this.registerUser() }
             />
 
@@ -73,6 +73,14 @@ export default class SignUp extends Component<{}> {
         var errorMessage = error.message;
         console.warn(errorMessage);
       });
+
+      await firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
+        name: '',
+        email: email,
+        image: '',
+        shopName: ''
+      });
+
       this.loginUser(email, password);
     }
   }

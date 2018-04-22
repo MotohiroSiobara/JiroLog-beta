@@ -30,7 +30,7 @@ export default class SignIn extends Component {
           <Button
             buttonStyle={{ marginTop: 20 }}
             backgroundColor="#03A9F4"
-            title="SIGN IN"
+            title="サインイン"
             onPress={(e) => this.loginUser() }
           />
 
