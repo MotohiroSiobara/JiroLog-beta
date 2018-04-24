@@ -22,15 +22,15 @@ export default class SignIn extends Component {
     return (
       <View style={{ paddingVertical: 20 }}>
         <Card>
-          <FormLabel>Email</FormLabel>
-          <FormInput placeholder="Email address..." onChangeText={(text) => this.setState({ email: text })} />
-          <FormLabel>Password</FormLabel>
-          <FormInput secureTextEntry placeholder="Password..." onChangeText={(text) => this.setState({ password: text })} />
+          <FormLabel>メールアドレス</FormLabel>
+          <FormInput placeholder="" onChangeText={(text) => this.setState({ email: text })} />
+          <FormLabel>パスワード</FormLabel>
+          <FormInput secureTextEntry placeholder="パスワード" onChangeText={(text) => this.setState({ password: text })} />
 
           <Button
             buttonStyle={{ marginTop: 20 }}
             backgroundColor="#03A9F4"
-            title="SIGN IN"
+            title="サインイン"
             onPress={(e) => this.loginUser() }
           />
 

@@ -28,17 +28,16 @@ export default class SignUp extends Component<{}> {
         style={styles.backgroundImage}>
         <View style={{ paddingVertical: 20 }}>
           <Card>
-            <FormLabel>Email</FormLabel>
-            <FormInput placeholder="Email address..." onChangeText={(text) => this.setState({ email: text })} />
-            <FormLabel>Password</FormLabel>
-            <FormInput secureTextEntry placeholder="Password..." onChangeText={(text) => this.setState({ password: text })} />
-            <FormLabel>Confirm Password</FormLabel>
-            <FormInput secureTextEntry placeholder="Confirm Password..." onChangeText={(text) => this.setState({ confirmPassword: text })} />
-
+            <FormLabel>メールアドレス</FormLabel>
+            <FormInput placeholder="" onChangeText={(text) => this.setState({ email: text })} />
+            <FormLabel>パスワード</FormLabel>
+            <FormInput secureTextEntry placeholder="" onChangeText={(text) => this.setState({ password: text })} />
+            <FormLabel>パスワード(確認)</FormLabel>
+            <FormInput secureTextEntry placeholder="" onChangeText={(text) => this.setState({ confirmPassword: text })} />
             <Button
               buttonStyle={{ marginTop: 20 }}
               backgroundColor="#03A9F4"
-              title="SIGN UP"
+              title="サインアップ"
               onPress={() => this.registerUser() }
             />
 
@@ -73,6 +72,14 @@ export default class SignUp extends Component<{}> {
         var errorMessage = error.message;
         console.warn(errorMessage);
       });
+
+      await firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
+        name: '',
+        email: email,
+        image: '',
+        shopName: ''
+      });
+
       this.loginUser(email, password);
     }
   }
