@@ -27,18 +27,21 @@ export default class UserPage extends Component<{}> {
         <Card title="プロフィール編集">
           <View style={{ marginTop: 10 }}>
             {this.state.image ? (
-              <Image
+              <View>
+                <Image
                 source={{uri: this.state.image}}
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: 80,
-                  height: 80,
-                  borderRadius: 40,
-                  alignSelf: "center",
-                  marginBottom: 20
-                }}
-              />
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: 80,
+                    height: 80,
+                    borderRadius: 40,
+                    alignSelf: "center",
+                    marginBottom: 20
+                  }}
+                />
+                <Button title='写真を変更する' onPress={() => this.submitPicture()}></Button>
+              </View>
             ) : (
               <Button title='写真を登録する' onPress={() => this.submitPicture()}></Button>
             )}
