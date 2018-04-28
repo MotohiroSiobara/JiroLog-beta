@@ -1,5 +1,5 @@
 'use strict';
-
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import React, { Component } from 'react';
 import { Card, Button, Text, FormLabel, FormInput } from "react-native-elements";
 import ImagePicker from 'react-native-image-picker';
@@ -7,7 +7,9 @@ import firebase from '../config/firebase';
 
 import {
   View,
-  Image
+  Image,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 
 export default class UserPage extends Component<{}> {
@@ -23,40 +25,42 @@ export default class UserPage extends Component<{}> {
 
   render() {
     return (
-      <View style={{ paddingVertical: 20 }}>
-        <Card title="プロフィール編集">
-          <View style={{ marginTop: 10 }}>
-            {this.state.image ? (
-              <View>
-                <Image
-                source={{uri: this.state.image}}
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: 80,
-                    height: 80,
-                    borderRadius: 40,
-                    alignSelf: "center",
-                    marginBottom: 20
-                  }}
-                />
-                <Button title='写真を変更する' onPress={() => this.submitPicture()}></Button>
-              </View>
-            ) : (
-              <Button title='写真を登録する' onPress={() => this.submitPicture()}></Button>
-            )}
-          </View>
-          <FormLabel>名前</FormLabel>
-          <FormInput placeholder='名前を入力' onChangeText={(text) => this.setState( { name: text })} value={this.state.name} />
-          <FormLabel>好きな店舗</FormLabel>
-          <FormInput placeholder='名前を入力' onChangeText={(text) => this.setState( { shopName: text })} value={this.state.shopName} />
-          <Button
-            buttonStyle={{ marginTop: 20 }}
-            backgroundColor="#03A9F4"
-            title="更新"
-            onPress={() => this.save() }
-          />
-        </Card>
+      <View style={{ paddingVertical: 20, flex: 1 }}>
+        <KeyboardAvoidingView behavior="position">
+          <Card title="プロフィール編集">
+            <View style={{ marginTop: 10 }}>
+              {this.state.image ? (
+                <View>
+                  <Image
+                  source={{uri: this.state.image}}
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: 80,
+                      height: 80,
+                      borderRadius: 40,
+                      alignSelf: "center",
+                      marginBottom: 20
+                    }}
+                  />
+                  <Button title='写真を変更する' onPress={() => this.submitPicture()}></Button>
+                </View>
+              ) : (
+                <Button title='写真を登録する' onPress={() => this.submitPicture()}></Button>
+              )}
+            </View>
+            <FormLabel>名前</FormLabel>
+            <FormInput placeholder='名前を入力' onChangeText={(text) => this.setState( { name: text })} value={this.state.name} />
+            <FormLabel>好きな店舗</FormLabel>
+            <FormInput placeholder='名前を入力' onChangeText={(text) => this.setState( { shopName: text })} value={this.state.shopName} />
+            <Button
+              buttonStyle={{ marginTop: 20 }}
+              backgroundColor="#03A9F4"
+              title="更新"
+              onPress={() => this.save() }
+            />
+          </Card>
+        </KeyboardAvoidingView>
       </View>
     );
   }
