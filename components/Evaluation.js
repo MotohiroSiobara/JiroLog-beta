@@ -114,7 +114,6 @@ export default class EvaluationPage extends Component<{}> {
   }
 
   submitPicture() {
-    // More info on all the options is below in the README...just some common use cases shown here
     var options = {
       title: '写真を登録する',
       takePhotoButtonTitle: '写真を撮る',
@@ -125,10 +124,6 @@ export default class EvaluationPage extends Component<{}> {
       }
     };
 
-    /**
-     * The first arg is the options object for customization (it can also be null or omitted for default options),
-     * The second arg is the callback which sends object: response (more info below in README)
-     */
     ImagePicker.showImagePicker(options, (response) => {
 
       if (response.didCancel) {

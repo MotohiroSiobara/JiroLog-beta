@@ -1,5 +1,4 @@
 'use strict';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 import React, { Component } from 'react';
 import { Card, Button, Text, FormLabel, FormInput } from "react-native-elements";
 import ImagePicker from 'react-native-image-picker';
