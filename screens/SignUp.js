@@ -7,21 +7,23 @@ import {
   ImageBackground,
 } from 'react-native';
 
-//import RegisterForm from '../components/RegisterForm';
-import { Card, Button, FormLabel, FormInput } from "react-native-elements";
+import { Card, Button, FormLabel, FormInput, FormValidationMessage } from "react-native-elements";
 import firebase from '../config/firebase';
+import { userValidateWithSignUp } from '../functions/validate';
 
 export default class SignUp extends Component<{}> {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
-      confirmPassword: ''
+      email: { text: '', errorMessage: ''},
+      password: { text: '', errorMessage: ''},
+      confirmPassword: { text: '', errorMessage: ''}
     }
   }
 
   render() {
+    const { email, password, confirmPassword } = this.state;
+
     return (
       <ImageBackground
         source={require('../images/jiro-1888644_640.jpg')}
@@ -29,11 +31,18 @@ export default class SignUp extends Component<{}> {
         <View style={{ paddingVertical: 20 }}>
           <Card>
             <FormLabel>メールアドレス</FormLabel>
-            <FormInput placeholder="" onChangeText={(text) => this.setState({ email: text })} />
+            <FormValidationMessage>{email.errorMessage}</FormValidationMessage>
+            <FormInput placeholder="" onChangeText={(text) => this.setState({ email: { text } })} />
+
+
             <FormLabel>パスワード</FormLabel>
-            <FormInput secureTextEntry placeholder="" onChangeText={(text) => this.setState({ password: text })} />
+            <FormValidationMessage>{password.errorMessage}</FormValidationMessage>
+            <FormInput secureTextEntry placeholder="" onChangeText={(text) => this.setState({ password: { text } })} shake={false} />
+
             <FormLabel>パスワード(確認)</FormLabel>
-            <FormInput secureTextEntry placeholder="" onChangeText={(text) => this.setState({ confirmPassword: text })} />
+            <FormValidationMessage>{confirmPassword.errorMessage}</FormValidationMessage>
+            <FormInput secureTextEntry placeholder="" onChangeText={(text) => this.setState({ confirmPassword: { text } })} />
+
             <Button
               buttonStyle={{ marginTop: 20 }}
               backgroundColor="#03A9F4"
@@ -65,30 +74,32 @@ export default class SignUp extends Component<{}> {
   }
 
   async registerUser() {
-    const { email, password, confirmPassword } = this.state;
-    if (password == confirmPassword) {
-      await firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.warn(errorMessage);
-      });
+    const stateParam = userValidateWithSignUp(this.state);
+    const { email, password, confirmPassword } = stateParam;
 
-      await firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
-        name: '',
-        email: email,
-        image: '',
-        shopName: ''
-      });
-
-      this.loginUser(email, password);
+    if (email.errorMessage || password.errorMessage || confirmPassword.errorMessage) {
+      return this.setState(stateParam);
     }
+
+    await firebase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    });
+
+    await firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
+      name: '',
+      email: email,
+      image: '',
+      shopName: ''
+    });
+
+    this.loginUser(email, password);
   }
 
   async loginUser(email, password) {
     await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
-      console.warn(errorMessage);
     });
   }
 }
