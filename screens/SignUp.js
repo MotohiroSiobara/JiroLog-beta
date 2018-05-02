@@ -10,6 +10,7 @@ import {
 import { Card, Button, FormLabel, FormInput, FormValidationMessage } from "react-native-elements";
 import firebase from '../config/firebase';
 import { userValidateWithSignUp } from '../functions/validate';
+import { messageByErrorCodeWithSignUp } from '../config/firebaseErrorCode.js';
 
 export default class SignUp extends Component<{}> {
   constructor(props) {
@@ -92,14 +93,22 @@ export default class SignUp extends Component<{}> {
       });
     }).catch(error => {
       var errorCode = error.code;
-      var errorMessage = error.message;
 
-      this.setState({email: Object.assign(this.state.email, { errorMessage: errorMessage })});
+      const messageObj = messageByErrorCodeWithSignUp(errorCode);
+      if (messageObj.length === 0) {
+        alert("原因不明のエラーがはっせい");
+      }
+
+      if (messageObj.type == 'email') {
+        this.setState({email: Object.assign(this.state.email, { errorMessage: messageObj.message })});
+      } else if (messageObj.type == 'password') {
+        this.setState({password: Object.assign(this.state.password, { errorMessage: messageObj.message })});
+      }
     });
   }
 
-  async loginUser(email, password) {
-    await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+  loginUser(email, password) {
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
     });

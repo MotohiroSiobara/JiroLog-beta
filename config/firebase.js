@@ -15,8 +15,8 @@ firebase.initializeApp(config);
 // 認証時のコールバック
 firebase.auth().onAuthStateChanged(user => {
   if (user != null) {
-    console.warn('We are authenticated now!')
+    console.warn('We are authenticated now!');
   }
-})
+});
 
 export default firebase;
