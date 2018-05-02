@@ -73,7 +73,7 @@ export default class SignUp extends Component<{}> {
     );
   }
 
-  async registerUser() {
+  registerUser() {
     const stateParam = userValidateWithSignUp(this.state);
     const { email, password, confirmPassword } = stateParam;
 
@@ -81,19 +81,21 @@ export default class SignUp extends Component<{}> {
       return this.setState(stateParam);
     }
 
-    await firebase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
+    firebase.auth().createUserWithEmailAndPassword(email.text, password.text).then(() => {
+      firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
+        name: '',
+        email: email,
+        image: '',
+        shopName: ''
+      }).then(() => {
+        this.loginUser(email, password);
+      });
+    }).catch(error => {
       var errorCode = error.code;
       var errorMessage = error.message;
-    });
 
-    await firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
-      name: '',
-      email: email,
-      image: '',
-      shopName: ''
+      this.setState({email: Object.assign(this.state.email, { errorMessage: errorMessage })});
     });
-
-    this.loginUser(email, password);
   }
 
   async loginUser(email, password) {
