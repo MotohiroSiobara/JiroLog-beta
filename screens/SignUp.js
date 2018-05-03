@@ -65,7 +65,7 @@ export default class SignUp extends Component<{}> {
               backgroundColor="transparent"
               textStyle={{ color: "#bcbec1" }}
               title="テストログイン"
-              onPress={() => this.loginUser('example.2@docomo.ne.jp', 'password')}
+              onPress={() => this.loginUser('siobara.motohiro@gmail.com', 'password')}
             />
 
           </Card>
