@@ -15,7 +15,6 @@ export default class UserPage extends Component<{}> {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0, // 再レンダリングを促したい場合のためのstate
       name: '',
       shopName: '',
       image: '',
@@ -74,10 +73,10 @@ export default class UserPage extends Component<{}> {
   }
 
   logout() {
+    this.setState({ isLoading: true });
     firebase.auth().signOut().then(() => {
-      this.setState({ count: this.state.count + 1 });
+      this.setState({ isLoading: false });
     }).catch(function(error) {
-      // An error happened.
     });
   }
 }

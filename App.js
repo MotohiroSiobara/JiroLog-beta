@@ -14,6 +14,7 @@ export default class App extends Component<{}> {
   constructor(props) {
     super(props);
     this.state = { beLoggedIn: false };
+
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ beLoggedIn: true });

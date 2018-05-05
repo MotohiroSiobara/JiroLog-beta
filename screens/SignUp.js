@@ -33,16 +33,16 @@ export default class SignUp extends Component<{}> {
           <Card>
             <FormLabel>メールアドレス</FormLabel>
             <FormValidationMessage>{email.errorMessage}</FormValidationMessage>
-            <FormInput placeholder="" onChangeText={(text) => this.setState({ email: { text } })} />
+            <FormInput placeholder="" onChangeText={(text) => this.setState({ email: { text, errorMessage: '' } })} />
 
 
             <FormLabel>パスワード</FormLabel>
             <FormValidationMessage>{password.errorMessage}</FormValidationMessage>
-            <FormInput secureTextEntry placeholder="" onChangeText={(text) => this.setState({ password: { text } })} shake={false} />
+            <FormInput secureTextEntry placeholder="" onChangeText={(text) => this.setState({ password: { text, errorMessage: '' } })} shake={false} />
 
             <FormLabel>パスワード(確認)</FormLabel>
             <FormValidationMessage>{confirmPassword.errorMessage}</FormValidationMessage>
-            <FormInput secureTextEntry placeholder="" onChangeText={(text) => this.setState({ confirmPassword: { text } })} />
+            <FormInput secureTextEntry placeholder="" onChangeText={(text) => this.setState({ confirmPassword: { text, errorMessage: '' } })} />
 
             <Button
               buttonStyle={{ marginTop: 20 }}
@@ -100,9 +100,11 @@ export default class SignUp extends Component<{}> {
       }
 
       if (messageObj.type == 'email') {
-        this.setState({email: Object.assign(this.state.email, { errorMessage: messageObj.message })});
+        this.setState({ email: Object.assign(this.state.email, { errorMessage: messageObj.message })});
       } else if (messageObj.type == 'password') {
-        this.setState({password: Object.assign(this.state.password, { errorMessage: messageObj.message })});
+        this.setState({ password: Object.assign(this.state.password, { errorMessage: messageObj.message })});
+      } else if (messageObj.type == 'all') {
+        alert(messageObj.message);
       }
     });
   }
