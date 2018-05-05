@@ -6,26 +6,39 @@ import {
   TouchableHighlight,
   ImageBackground,
 } from 'react-native';
-import { Card, Button, FormLabel, FormInput } from "react-native-elements";
+import {
+  Card,
+  Button,
+  FormLabel,
+  FormInput,
+  FormValidationMessage,
+} from "react-native-elements";
 import firebase from '../config/firebase';
+import { userValidateWithSignIn } from '../functions/validate';
+import { messageByErrorCodeWithSignIn } from '../config/firebaseErrorCode.js';
 
 export default class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: ''
+      email: { text: '', errorMessage: ''},
+      password: { text: '', errorMessage: ''},
     };
   }
 
   render() {
+    const { email, password } = this.state;
+
     return (
       <View style={{ paddingVertical: 20 }}>
         <Card>
           <FormLabel>メールアドレス</FormLabel>
-          <FormInput placeholder="" onChangeText={(text) => this.setState({ email: text })} />
+          <FormValidationMessage>{email.errorMessage}</FormValidationMessage>
+          <FormInput placeholder="" onChangeText={(text) => this.setState({ email: { text, errorMessage: '' } })} />
+
           <FormLabel>パスワード</FormLabel>
-          <FormInput secureTextEntry placeholder="パスワード" onChangeText={(text) => this.setState({ password: text })} />
+          <FormValidationMessage>{password.errorMessage}</FormValidationMessage>
+          <FormInput secureTextEntry placeholder="パスワード" onChangeText={(text) => this.setState({ password: { text, errorMessage: '' } })} />
 
           <Button
             buttonStyle={{ marginTop: 20 }}
@@ -56,12 +69,27 @@ export default class SignIn extends Component {
     );
   }
 
-  async loginUser() {
-    const { email, password } = this.state;
-    await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+  loginUser() {
+    const stateParam = userValidateWithSignIn(this.state);
+    const { email, password } = stateParam;
+
+    if (email.errorMessage || password.errorMessage) {
+      return this.setState(stateParam);
+    }
+
+    firebase.auth().signInWithEmailAndPassword(email.text, password.text).catch((error) => {
       var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorMessage);
+
+      const messageObj = messageByErrorCodeWithSignIn(errorCode);
+      if (messageObj.length === 0) {
+        alert("原因不明のエラーがはっせい");
+      }
+
+      if (messageObj.type == 'email') {
+        this.setState({ email: Object.assign(this.state.email, { errorMessage: messageObj.message })});
+      } else if (messageObj.type == 'password') {
+        this.setState({ password: Object.assign(this.state.password, { errorMessage: messageObj.message })});
+      }
     });
   }
 }
