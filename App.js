@@ -9,23 +9,30 @@ import {
 } from 'react-native';
 import { createRootNavigator } from './config/router';
 import firebase from './config/firebase';
+import Indicator from './components/Indicator';
 
 export default class App extends Component<{}> {
   constructor(props) {
     super(props);
-    this.state = { beLoggedIn: false };
+    this.state = { beLoggedIn: false, isLoading: true };
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.setState({ beLoggedIn: true });
+        this.setState({ beLoggedIn: true, isLoading: false });
       } else {
-        this.setState({ beLoggedIn: false });
+        this.setState({ beLoggedIn: false, isLoading: false });
       }
     });
   }
 
   render() {
-    const Root = createRootNavigator(this.state.beLoggedIn);
+    const { isLoading, beLoggedIn } = this.state;
+
+    if (isLoading) {
+      return <Indicator />
+    }
+
+    const Root = createRootNavigator(beLoggedIn);
     return (
       <Root />
     );

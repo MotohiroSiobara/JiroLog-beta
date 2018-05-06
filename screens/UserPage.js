@@ -62,6 +62,7 @@ export default class UserPage extends Component<{}> {
             title="プロフィールを編集する"
             onPress={() => this.props.navigation.navigate('EditProfile', { name, shopName, image })}
           />
+
           <Button
             backgroundColor="#03A9F4"
             title="サインアウト"
@@ -75,6 +76,7 @@ export default class UserPage extends Component<{}> {
   logout() {
     this.setState({ isLoading: true });
     firebase.auth().signOut().then(() => {
+      firebase.auth().signOut();
       this.setState({ isLoading: false });
     }).catch(function(error) {
     });
