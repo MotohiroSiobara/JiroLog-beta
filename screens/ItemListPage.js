@@ -38,7 +38,7 @@ export default class ItemListPage extends Component<{}> {
     this.setState({ isLoading: false });
 
     // データベースから削除された時のeventハンドリング
-    db.ref(evaluationDbUrl(firebase.auth().currentUser.uid)).on('child_removed', snapshot => {
+    db.ref(evaluationDbUrl(getCurrentUser().uid)).on('child_removed', snapshot => {
       this.setState({
         evaluations: this.state.evaluations.filter((ev, index) => {
           return ev.key != snapshot.key
@@ -66,7 +66,7 @@ export default class ItemListPage extends Component<{}> {
 
   deleteEvaluation(index) {
     const key = this.state.evaluations[index].key
-    db.ref(evaluationDbUrl(firebase.auth().currentUser.uid)).child(key).set(null)
+    db.ref(evaluationDbUrl(getCurrentUser().uid)).child(key).set(null)
   }
 
   moveToDetailPage(evaluation) {
