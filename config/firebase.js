@@ -13,3 +13,11 @@ const config = {
 firebaseApp.initializeApp(config);
 
 export const firebase = firebaseApp;
+
+export const evaluationDbUrl = (uid) => {
+  return 'evaluations/' + uid;
+};
+
+export const getCurrentUser = () => {
+  return firebase.auth().currentUser;
+};
