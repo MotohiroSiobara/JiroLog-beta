@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import firebase from '../config/firebase';
+import { firebase } from '../config/firebase';
 import { formatDate } from '../functions/formatDate';
 import ItemList from '../components/ItemList';
 
@@ -26,8 +26,6 @@ export default class ItemListPage extends Component<{}> {
   }
 
   componentWillMount() {
-    // console.warn("componentWillMount");
-    // データベースに追加された時のeventハンドリング
     db.ref(firebase.auth().currentUser.uid + '/evaluations').on('child_added', snapshot => {
       console.warn("componentWillMount");
       this.setState({

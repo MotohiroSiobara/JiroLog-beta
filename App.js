@@ -8,7 +8,7 @@ import {
   ImageBackground
 } from 'react-native';
 import { createRootNavigator } from './config/router';
-import firebase from './config/firebase';
+import { firebase } from './config/firebase';
 import Indicator from './components/Indicator';
 
 export default class App extends Component<{}> {

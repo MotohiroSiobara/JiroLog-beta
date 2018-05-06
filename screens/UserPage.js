@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import firebase from '../config/firebase';
+import { firebase } from '../config/firebase';
 import { Card, Button, Text } from "react-native-elements";
 import Indicator from '../components/Indicator';
 

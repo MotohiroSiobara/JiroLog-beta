@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Card, Button, Text, FormLabel, FormInput } from "react-native-elements";
 import ImagePicker from 'react-native-image-picker';
-import firebase from '../config/firebase';
+import { firebase } from '../config/firebase';
 
 import {
   View,

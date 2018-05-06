@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import { Card, Button, FormLabel, FormInput, FormValidationMessage } from "react-native-elements";
-import firebase from '../config/firebase';
+import { firebase } from '../config/firebase';
 import { userValidateWithSignUp } from '../functions/validate';
 import { messageByErrorCodeWithSignUp } from '../config/firebaseErrorCode.js';
 

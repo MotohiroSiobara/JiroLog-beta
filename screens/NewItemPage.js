@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase from '../config/firebase';
+import { firebase } from '../config/firebase';
 import Evaluation from '../components/Evaluation';
 import { formatDate } from '../functions/formatDate';
 
