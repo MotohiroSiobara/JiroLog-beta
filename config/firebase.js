@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import * as firebaseApp from 'firebase';
 import CONFIG from './setting';
 
 const config = {
@@ -10,13 +10,14 @@ const config = {
   messagingSenderId: CONFIG.MESSAGING_SENDER_ID
 };
 
-firebase.initializeApp(config);
+firebaseApp.initializeApp(config);
 
-// 認証時のコールバック
-firebase.auth().onAuthStateChanged(user => {
-  if (user != null) {
-    console.warn('We are authenticated now!');
-  }
-});
+export const firebase = firebaseApp;
 
-export default firebase;
+export const evaluationDbUrl = (uid) => {
+  return 'evaluations/' + uid;
+};
+
+export const getCurrentUser = () => {
+  return firebase.auth().currentUser;
+};

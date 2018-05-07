@@ -13,7 +13,7 @@ import {
   FormInput,
   FormValidationMessage,
 } from "react-native-elements";
-import firebase from '../config/firebase';
+import { firebase } from '../config/firebase';
 import { userValidateWithSignIn } from '../functions/validate';
 import { messageByErrorCodeWithSignIn } from '../config/firebaseErrorCode.js';
 

@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import firebase from '../config/firebase';
+import { firebase, evaluationDbUrl, getCurrentUser } from '../config/firebase';
 import { formatDate } from '../functions/formatDate';
 import ItemList from '../components/ItemList';
 
@@ -26,10 +26,7 @@ export default class ItemListPage extends Component<{}> {
   }
 
   componentWillMount() {
-    // console.warn("componentWillMount");
-    // データベースに追加された時のeventハンドリング
-    db.ref(firebase.auth().currentUser.uid + '/evaluations').on('child_added', snapshot => {
-      console.warn("componentWillMount");
+    db.ref(evaluationDbUrl(firebase.auth().currentUser.uid)).on('child_added', snapshot => {
       this.setState({
         evaluations: [
           ...this.state.evaluations,
@@ -41,7 +38,7 @@ export default class ItemListPage extends Component<{}> {
     this.setState({ isLoading: false });
 
     // データベースから削除された時のeventハンドリング
-    db.ref(firebase.auth().currentUser.uid + '/evaluations').on('child_removed', snapshot => {
+    db.ref(evaluationDbUrl(getCurrentUser().uid)).on('child_removed', snapshot => {
       this.setState({
         evaluations: this.state.evaluations.filter((ev, index) => {
           return ev.key != snapshot.key
@@ -69,17 +66,7 @@ export default class ItemListPage extends Component<{}> {
 
   deleteEvaluation(index) {
     const key = this.state.evaluations[index].key
-    this.evaluationDBRef().child(key).set(null)
-  }
-
-  evaluationDBRef() {
-    return db.ref(firebase.auth().currentUser.uid + '/evaluations');
-  }
-
-  toggleModal() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    })
+    db.ref(evaluationDbUrl(getCurrentUser().uid)).child(key).set(null)
   }
 
   moveToDetailPage(evaluation) {

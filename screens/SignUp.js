@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import { Card, Button, FormLabel, FormInput, FormValidationMessage } from "react-native-elements";
-import firebase from '../config/firebase';
+import { firebase, getCurrentUser } from '../config/firebase';
 import { userValidateWithSignUp } from '../functions/validate';
 import { messageByErrorCodeWithSignUp } from '../config/firebaseErrorCode.js';
 
@@ -83,7 +83,7 @@ export default class SignUp extends Component<{}> {
     }
 
     firebase.auth().createUserWithEmailAndPassword(email.text, password.text).then(() => {
-      firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
+      firebase.database().ref('users/' + getCurrentUser().uid).set({
         name: '',
         email: email,
         image: '',

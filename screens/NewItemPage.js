@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase from '../config/firebase';
+import { firebase, evaluationDbUrl, getCurrentUser } from '../config/firebase';
 import Evaluation from '../components/Evaluation';
 import { formatDate } from '../functions/formatDate';
 
@@ -11,7 +11,7 @@ export default class NewItemPage extends Component<{}> {
   }
 
   saveEvaluation(evaluation) {
-    firebase.database().ref(firebase.auth().currentUser.uid + '/evaluations').push({
+    firebase.database().ref(evaluationDbUrl(getCurrentUser().uid)).push({
       shopName:    evaluation.shopName,
       pigPoint:    evaluation.pigPoint,
       noodlePoint: evaluation.noodlePoint,
