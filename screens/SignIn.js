@@ -3,8 +3,9 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableHighlight,
+  Touch,
   ImageBackground,
+  TouchableOpacity 
 } from 'react-native';
 import {
   Card,
@@ -16,6 +17,7 @@ import {
 import { firebase } from '../config/firebase';
 import { userValidateWithSignIn } from '../functions/validate';
 import { messageByErrorCodeWithSignIn } from '../config/firebaseErrorCode.js';
+const dismissKeyboard = require('react-native-dismiss-keyboard');
 
 export default class SignIn extends Component {
   constructor(props) {
@@ -30,7 +32,10 @@ export default class SignIn extends Component {
     const { email, password } = this.state;
 
     return (
-      <View style={{ paddingVertical: 20 }}>
+      <TouchableOpacity
+        style={{ paddingVertical: 20 }}
+        onPress={() => dismissKeyboard() }
+      >
         <Card>
           <FormLabel>メールアドレス</FormLabel>
           <FormValidationMessage>{email.errorMessage}</FormValidationMessage>
@@ -65,11 +70,13 @@ export default class SignIn extends Component {
           />
 
         </Card>
-      </View>
+      </TouchableOpacity>
     );
   }
 
   loginUser() {
+    dismissKeyboard();
+    
     const stateParam = userValidateWithSignIn(this.state);
     const { email, password } = stateParam;
 

@@ -3,7 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   ImageBackground,
 } from 'react-native';
 
@@ -11,6 +11,7 @@ import { Card, Button, FormLabel, FormInput, FormValidationMessage } from "react
 import { firebase, getCurrentUser } from '../config/firebase';
 import { userValidateWithSignUp } from '../functions/validate';
 import { messageByErrorCodeWithSignUp } from '../config/firebaseErrorCode.js';
+const dismissKeyboard = require('react-native-dismiss-keyboard');
 
 export default class SignUp extends Component<{}> {
   constructor(props) {
@@ -29,7 +30,10 @@ export default class SignUp extends Component<{}> {
       <ImageBackground
         source={require('../images/jiro-1888644_640.jpg')}
         style={styles.backgroundImage}>
-        <View style={{ paddingVertical: 20 }}>
+        <TouchableOpacity 
+          style={{ paddingVertical: 20 }}
+          onPress={() => dismissKeyboard() }
+        >
           <Card>
             <FormLabel>メールアドレス</FormLabel>
             <FormValidationMessage>{email.errorMessage}</FormValidationMessage>
@@ -69,12 +73,14 @@ export default class SignUp extends Component<{}> {
             />
 
           </Card>
-        </View>
+        </TouchableOpacity>
       </ImageBackground>
     );
   }
 
   registerUser() {
+    dismissKeyboard();
+    
     const stateParam = userValidateWithSignUp(this.state);
     const { email, password, confirmPassword } = stateParam;
 
