@@ -3,12 +3,14 @@ import React, { Component } from 'react';
 import { Card, Button, Text, FormLabel, FormInput } from "react-native-elements";
 import ImagePicker from 'react-native-image-picker';
 import { firebase } from '../config/firebase';
+const dismissKeyboard = require('react-native-dismiss-keyboard');
 
 import {
   View,
   Image,
   KeyboardAvoidingView,
   ScrollView,
+  TouchableOpacity
 } from 'react-native';
 
 export default class UserPage extends Component<{}> {
@@ -24,7 +26,11 @@ export default class UserPage extends Component<{}> {
 
   render() {
     return (
-      <View style={{ paddingVertical: 20, flex: 1 }}>
+      <TouchableOpacity 
+        style={{ paddingVertical: 20, flex: 1 }} 
+        onPress={() => dismissKeyboard() }
+        underlayColor=""
+      >
         <KeyboardAvoidingView behavior="position">
           <Card title="プロフィール編集">
             <View style={{ marginTop: 10 }}>
@@ -60,11 +66,12 @@ export default class UserPage extends Component<{}> {
             />
           </Card>
         </KeyboardAvoidingView>
-      </View>
+      </TouchableOpacity>
     );
   }
 
   async save() {
+    dismissKeyboard();
     // uidで特定のuserを更新(ログイン時に作成しておく)
     const { image, name, shopName } = this.state;
     await firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
