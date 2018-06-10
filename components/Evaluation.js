@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Rating } from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker';
-
+//import CustomDatePicker from './CustomDatePicker';
 import {
   StyleSheet,
   PickerIOS,
@@ -48,7 +48,8 @@ export default class EvaluationPage extends Component<{}> {
           date={this.state.date}
           onDateChange={(newDate) => this.setDate(newDate)}
         />
-
+    
+        <CustomDatePicker />
         <View style={styles.rowView}>
           <Text style={styles.label}>豚</Text>
           <Rating
