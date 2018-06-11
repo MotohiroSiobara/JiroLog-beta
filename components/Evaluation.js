@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Rating } from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker';
-//import CustomDatePicker from './CustomDatePicker';
+import CustomDatePicker from './CustomDatePicker';
+import { formatDate } from '../functions/formatDate';
 import {
   StyleSheet,
   PickerIOS,
@@ -23,7 +24,7 @@ export default class EvaluationPage extends Component<{}> {
       noodlePoint: 0,
       soupPoint: 0,
       totalPoint: 0,
-      date: new Date(),
+      date: formatDate(new Date(), 'yyyy/MM/dd'),
       image: '',
     }
   }
@@ -41,16 +42,16 @@ export default class EvaluationPage extends Component<{}> {
             return(<PickerIOS.Item label={name} value={name} key={name} />)
           })}
         </PickerIOS>
-
-        <DatePickerIOS
-          mode='date'
-          locale='ja'
-          date={this.state.date}
-          onDateChange={(newDate) => this.setDate(newDate)}
-        />
     
-        <CustomDatePicker />
-        <View style={styles.rowView}>
+        <View style={styles.rowView}> 
+          <Text style={styles.label}>来店日</Text>
+          <CustomDatePicker 
+            date={this.state.date}
+            onDateChange={(newDate) => this.setDate(newDate)}
+          />
+        </Vie>
+                   
+        <View style={styles.rowView}>                            
           <Text style={styles.label}>豚</Text>
           <Rating
             type="star"
@@ -142,7 +143,7 @@ export default class EvaluationPage extends Component<{}> {
   }
 
   renderImage() {
-    if(this.state.image) {
+    if (this.state.image) {
       return(
         <Image source={{ uri: this.state.image }} style={{ width: 200, height: 200 }} />
       )
