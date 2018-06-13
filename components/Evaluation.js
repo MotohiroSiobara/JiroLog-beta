@@ -49,7 +49,7 @@ export default class EvaluationPage extends Component<{}> {
             date={this.state.date}
             onDateChange={(newDate) => this.setDate(newDate)}
           />
-        </Vie>
+        </View>
                    
         <View style={styles.rowView}>                            
           <Text style={styles.label}>豚</Text>
