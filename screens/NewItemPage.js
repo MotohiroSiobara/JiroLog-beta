@@ -17,7 +17,7 @@ export default class NewItemPage extends Component<{}> {
       noodlePoint: evaluation.noodlePoint,
       soupPoint:   evaluation.soupPoint,
       totalPoint:  evaluation.totalPoint,
-      date:        formatDate(evaluation.date, 'yyyy/MM/dd'),
+      date:        evaluation.date,
       image:       evaluation.image
     });
 
