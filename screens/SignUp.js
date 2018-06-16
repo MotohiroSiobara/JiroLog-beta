@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import { Card, Button, FormLabel, FormInput, FormValidationMessage } from "react-native-elements";
-import { firebase, getCurrentUser } from '../config/firebase';
+import { firebase, getCurrentUser, userDbUrl } from '../config/firebase';
 import { userValidateWithSignUp } from '../functions/validate';
 import { messageByErrorCodeWithSignUp } from '../config/firebaseErrorCode.js';
 const dismissKeyboard = require('react-native-dismiss-keyboard');
@@ -64,14 +64,6 @@ export default class SignUp extends Component<{}> {
               }}
             />
 
-            <Button
-              buttonStyle={{ marginTop: 20 }}
-              backgroundColor="transparent"
-              textStyle={{ color: "#bcbec1" }}
-              title="テストログイン"
-              onPress={() => this.loginUser('siobara.motohiro@gmail.com', 'password')}
-            />
-
           </Card>
         </TouchableOpacity>
       </ImageBackground>
@@ -89,7 +81,7 @@ export default class SignUp extends Component<{}> {
     }
 
     firebase.auth().createUserWithEmailAndPassword(email.text, password.text).then(() => {
-      firebase.database().ref('users/' + getCurrentUser().uid).set({
+      firebase.database().ref(userDbUrl(getCurrentUser.uid)).set({
         name: '',
         email: email,
         image: '',
