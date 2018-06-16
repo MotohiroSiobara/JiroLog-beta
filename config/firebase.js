@@ -15,8 +15,12 @@ firebaseApp.initializeApp(config);
 export const firebase = firebaseApp;
 
 export const evaluationDbUrl = (uid) => {
-  return 'evaluations/' + uid;
+  return uid + '/evaluations';
 };
+
+export const userDbUrl = (uid) => {
+  return uid + '/user';
+}
 
 export const getCurrentUser = () => {
   return firebase.auth().currentUser;

@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { firebase, getCurrentUser } from '../config/firebase';
+import { firebase, getCurrentUser, userDbUrl } from '../config/firebase';
 import { Card, Button, Text } from "react-native-elements";
 import Indicator from '../components/Indicator';
 
@@ -23,7 +23,7 @@ export default class UserPage extends Component<{}> {
   }
 
   componentWillMount() {
-    firebase.database().ref('users/' + getCurrentUser().uid).on('value', (snapshot) => {
+    firebase.database().ref(userDbUrl(getCurrentUser().uid)).on('value', (snapshot) => {
       const { name, shopName, image } = snapshot.val();
       this.setState({
         name: name,

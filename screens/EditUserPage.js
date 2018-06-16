@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Card, Button, Text, FormLabel, FormInput } from "react-native-elements";
 import ImagePicker from 'react-native-image-picker';
-import { firebase } from '../config/firebase';
+import { firebase, userDbUrl, getCurrentUser } from '../config/firebase';
 const dismissKeyboard = require('react-native-dismiss-keyboard');
 
 import {
@@ -74,7 +74,7 @@ export default class UserPage extends Component<{}> {
     dismissKeyboard();
     // uidで特定のuserを更新(ログイン時に作成しておく)
     const { image, name, shopName } = this.state;
-    await firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
+    await firebase.database().ref(userDbUrl(getCurrentUser().uid)).set({
       name: name,
       image: image,
       shopName: shopName
