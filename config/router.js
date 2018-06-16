@@ -14,7 +14,20 @@ import DetailItemPage from '../screens/DetailItemPage';
 import NewItemPage from '../screens/NewItemPage';
 import UserPage from '../screens/UserPage';
 import EditUserPage from '../screens/EditUserPage';
+import ChartPage from '../screens/ChartPage';
 
+// グラフページ
+export const ChartStack = StackNavigator({
+  ItemList: {
+    screen: ChartPage,
+    navigationOptions: ({ navigation }) => ({
+      title: 'グラフページ'
+    }),
+  },
+});
+
+
+// ItemListページ
 export const ItemStack = StackNavigator({
   ItemList: {
     screen: ItemListPage,
@@ -55,6 +68,13 @@ export const UserStack = StackNavigator({
 });
 
 export const LoggedIn = TabNavigator({
+  ChartTab: {
+    screen: ChartStack,
+    navigationOptions: {
+      tabBarLabel: 'グラフ',
+      tabBarIcon: ({ tintColor }) => <Icon name="list" size={35} color={tintColor} />,
+    },
+  },
   ListTab: {
     screen: ItemStack,
     navigationOptions: {
@@ -95,7 +115,7 @@ export const createRootNavigator = (beLoggedIn = false) => {
       LoggedIn: {
         screen: LoggedIn,
         navigationOptions: {
-          title: '一覧ページ',
+          title: 'グラフページ',
         },
       }
     },
