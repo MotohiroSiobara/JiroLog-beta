@@ -72,7 +72,7 @@ export const LoggedIn = TabNavigator({
     screen: ChartStack,
     navigationOptions: {
       tabBarLabel: 'グラフ',
-      tabBarIcon: ({ tintColor }) => <Icon name="list" size={35} color={tintColor} />,
+      tabBarIcon: ({ tintColor }) => <Icon name="show-chart" size={36} color={tintColor} />,
     },
   },
   ListTab: {
